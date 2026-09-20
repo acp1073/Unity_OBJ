@@ -1,6 +1,6 @@
+# 202411581154
 # OBJ 模型浏览器
-
-这是一个基于 Unity 2022.3 的运行时 OBJ 浏览器。打开 `Assets/Scenes/SampleScene.unity` 后直接点击 Play，查看器会自动启动并加载 `Assets/Models/SampleCube.obj`。
+这是一个基于 Unity 2022.3 的运行时 OBJ 浏览器，目前作为作业的基础版本。打开 `Assets/Scenes/SampleScene.unity` 后直接点击 Play，查看器会自动启动并加载 `Assets/Models/SampleCube.obj`。
 
 ## 使用方式
 
