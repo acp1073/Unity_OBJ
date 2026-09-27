@@ -136,6 +136,18 @@ public sealed class ObjViewerController : MonoBehaviour
         orbitCamera.Focus(renderer.bounds);
     }
 
+    public void OpenParametricCurveDemo()
+    {
+        if (FindObjectOfType<ParametricCurveController>() == null)
+        {
+            GameObject curveDemo = new GameObject("Parametric Curve Demo");
+            curveDemo.AddComponent<ParametricCurveController>();
+        }
+
+        // The curve demo provides an OBJ VIEWER button to return here.
+        gameObject.SetActive(false);
+    }
+
     public void ChooseFile()
     {
 #if UNITY_EDITOR
@@ -237,6 +249,7 @@ public sealed class ObjViewerController : MonoBehaviour
         GameObject panel = CreateUIObject("Control Panel", canvasObject.transform);
         Image panelImage = panel.AddComponent<Image>();
         panelImage.color = new Color(0.035f, 0.05f, 0.075f, 0.94f);
+        CreateButton("Curves", panel.transform, "CURVES", new Vector2(360f, -122f), new Vector2(58f, 32f), OpenParametricCurveDemo);
         SetRect(panel, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(18f, -18f), new Vector2(430f, 170f), new Vector2(0f, 1f));
 
         CreateText("Title", panel.transform, "OBJ 模型浏览器", 22, Color.white, new Vector2(18f, -18f), new Vector2(394f, 34f), new Vector2(0f, 1f));
