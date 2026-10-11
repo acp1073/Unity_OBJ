@@ -18,6 +18,11 @@ public sealed class ObjViewerController : MonoBehaviour
     private Material modelMaterial;
     private bool ownsLoadedModel;
 
+    public ObjLoadedModel LoadedModel
+    {
+        get { return loadedModel; }
+    }
+
     private void Awake()
     {
         EnsureEventSystem();
@@ -92,6 +97,16 @@ public sealed class ObjViewerController : MonoBehaviour
         {
             SetStatus("加载失败：" + exception.Message, true);
         }
+    }
+
+    public void LoadModelFromPath(string path)
+    {
+        if (pathInput != null)
+        {
+            pathInput.text = path;
+        }
+
+        LoadModel();
     }
 
     public void ClearModel()

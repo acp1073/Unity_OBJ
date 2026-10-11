@@ -160,6 +160,34 @@ public sealed class ParametricCurveController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void OpenQuaternionRotationDemo()
+    {
+        GameObject demoObject = new GameObject("Quaternion Rotation Demo");
+        QuaternionRotationDemoController demo = demoObject.AddComponent<QuaternionRotationDemoController>();
+        demo.SetReturnTarget(gameObject);
+        ObjViewerController viewer = FindObjectOfType<ObjViewerController>(true);
+        ObjLoadedModel model = viewer == null ? null : viewer.LoadedModel;
+        if (model == null)
+        {
+            ObjLoadedModel[] sceneModels = FindObjectsOfType<ObjLoadedModel>(true);
+            for (int i = 0; i < sceneModels.Length; i++)
+            {
+                if (sceneModels[i] != null && sceneModels[i].UnityMesh != null)
+                {
+                    model = sceneModels[i];
+                    break;
+                }
+            }
+        }
+
+        if (model != null)
+        {
+            demo.SetObjModel(model);
+        }
+
+        gameObject.SetActive(false);
+    }
+
     private void SetupCamera()
     {
         curveCamera = Camera.main;
@@ -237,7 +265,7 @@ public sealed class ParametricCurveController : MonoBehaviour
         GameObject panel = CreateUIObject("Curve Controls", canvasObject.transform);
         Image panelImage = panel.AddComponent<Image>();
         panelImage.color = new Color(0.035f, 0.05f, 0.075f, 0.95f);
-        SetRect(panel, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(18f, -18f), new Vector2(460f, 278f), new Vector2(0f, 1f));
+        SetRect(panel, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(18f, -18f), new Vector2(460f, 322f), new Vector2(0f, 1f));
 
         CreateText(panel.transform, "PARAMETRIC CURVES", 21, Color.white, new Vector2(18f, -17f), new Vector2(420f, 30f));
         CreateText(panel.transform, "Drag points | Shift + click: add | Right click: remove", 12, new Color(0.67f, 0.75f, 0.86f), new Vector2(18f, -46f), new Vector2(420f, 24f));
@@ -250,7 +278,8 @@ public sealed class ParametricCurveController : MonoBehaviour
         CreateButton(panel.transform, "ADD POINT", new Vector2(128f, -157f), new Vector2(110f, 32f), AddPoint);
         CreateButton(panel.transform, "REMOVE", new Vector2(248f, -157f), new Vector2(100f, 32f), RemovePoint);
         CreateButton(panel.transform, "OBJ VIEWER", new Vector2(358f, -157f), new Vector2(70f, 32f), ReturnToObjViewer);
-        statusText = CreateText(panel.transform, "", 12, Color.white, new Vector2(18f, -202f), new Vector2(420f, 34f));
+        CreateButton(panel.transform, "QUATERNION", new Vector2(18f, -199f), new Vector2(140f, 32f), OpenQuaternionRotationDemo);
+        statusText = CreateText(panel.transform, "", 12, Color.white, new Vector2(18f, -244f), new Vector2(420f, 34f));
         statusText.horizontalOverflow = HorizontalWrapMode.Wrap;
         statsText = CreateText(canvasObject.transform, "", 15, new Color(0.82f, 0.88f, 0.95f), new Vector2(18f, 18f), new Vector2(700f, 28f));
         RectTransform statsRect = statsText.GetComponent<RectTransform>();

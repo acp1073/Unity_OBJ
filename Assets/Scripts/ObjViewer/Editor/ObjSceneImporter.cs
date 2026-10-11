@@ -29,6 +29,23 @@ public static class ObjSceneImporter
     {
         try
         {
+            if (Application.isPlaying)
+            {
+                ObjViewerController viewer = UnityEngine.Object.FindObjectOfType<ObjViewerController>();
+                if (viewer == null)
+                {
+                    Debug.LogError("Play 模式下找不到 OBJ 浏览器，无法加载模型。");
+                    return;
+                }
+
+                // Editor scene/asset import APIs cannot modify the persistent
+                // scene during Play Mode. Route the request through the
+                // runtime loader so the newly loaded model becomes the
+                // browser's active model and can be used by the quaternion demo.
+                viewer.LoadModelFromPath(sourcePath);
+                return;
+            }
+
             ObjMeshData data = ObjParser.ParseFile(sourcePath);
             ObjMeshBuildResult buildResult = ObjParser.BuildUnityMeshResult(data);
             Mesh mesh = buildResult.Mesh;

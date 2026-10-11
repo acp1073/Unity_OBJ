@@ -66,3 +66,20 @@ Inspector 的 **Curve Type** 支持：
 - `ParametricCurveModel.ControlPoints` 可访问当前控制点；控制点以对象局部坐标保存。
 - `ParametricCurveMath.Evaluate` 可按参数 `t` 求曲线位置；`Sample` 可生成离散采样点。
 - `ParametricCurveModel` 管理场景组件和 `LineRenderer` 预览；纯曲线算法集中在 `ParametricCurveMath`，便于后续扩展测长、曲率、路径动画、导出和曲面建模等功能。
+
+## 作业3：四元数旋转变换演示
+
+作业3以运行时演示的方式集成在同一场景流程中。打开 `Assets/Scenes/SampleScene.unity` 并点击 **Play**；如需演示自己的模型，先在 OBJ 浏览器中用 **选择文件/加载**，或使用 **Tools > OBJ Viewer > Import OBJ Into Current Scene...** 加载该 OBJ，再点击 **CURVES** 进入作业2，最后点击曲线界面中的 **QUATERNION**。Play 模式下，编辑器菜单会转交给运行时加载器；停止 Play 后再用该菜单才会创建并保存场景模型。作业3会使用 OBJ 浏览器当前加载的模型。点击 **BACK TO CURVE DEMO** 可返回作业2，再点击 **OBJ VIEWER** 返回作业1。
+
+### 交互操作
+
+1. 在界面中输入旋转轴 `(x, y, z)` 和目标角度（度）；旋转轴不能是零向量。
+2. 点击 **APPLY AXIS-ANGLE**，使用 `Quaternion.AngleAxis` 将轴角转换为四元数并立即应用到旋转对象。
+3. 从当前姿态到输入目标姿态，可分别点击 **ANGLE LERP**、**QUAT LERP** 和 **QUAT SLERP** 比较三种为期两秒的插值。点击 **RESET** 可回到单位姿态，并保留目标轴角，便于重复比较。
+4. **ANGLE LERP** 对起点和目标的 Euler XYZ 角分量分别使用 `Mathf.LerpAngle` 插值，再转换成旋转；这种方式可能受欧拉角耦合和万向节锁影响。
+5. **QUAT LERP** 使用 `Quaternion.Lerp` 做四元数线性插值并归一化；**QUAT SLERP** 使用 `Quaternion.Slerp` 沿单位四元数球面插值，角速度更均匀。
+6. 点击 **COMPOSE +45°**，演示绕输入轴再旋转 45° 的四元数复合，计算顺序为 `q增量 × q当前`。点击 **SHOW -q** 可切换显示符号，观察 `q` 和 `-q` 表示同一旋转，而物体朝向不变。
+
+演示视图显示 RGB 世界坐标轴和随物体旋转的局部坐标轴。若 OBJ 浏览器中已有加载模型，作业3会临时使用该 OBJ 作为旋转对象（包括用户选择的 OBJ）；返回曲线演示时会恢复模型原有父级和 Transform。没有可用 OBJ 时才使用默认方块。界面实时显示四元数分量 `(x, y, z, w)`、对应的 Euler XYZ 角，以及向量 `v = (1, 0, 0)` 经 `q·v` 旋转后的结果。
+
+主要逻辑位于 `QuaternionRotationDemoController`：它负责生成场景可视化、交互界面、轴角转换、四元数复合、Euler 角插值、四元数 Lerp 和 Slerp；演示对象退出时会恢复曲线模式原有相机设置。
