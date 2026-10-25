@@ -279,6 +279,8 @@ public sealed class ParametricCurveController : MonoBehaviour
         CreateButton(panel.transform, "REMOVE", new Vector2(248f, -157f), new Vector2(100f, 32f), RemovePoint);
         CreateButton(panel.transform, "OBJ VIEWER", new Vector2(358f, -157f), new Vector2(70f, 32f), ReturnToObjViewer);
         CreateButton(panel.transform, "QUATERNION", new Vector2(18f, -199f), new Vector2(140f, 32f), OpenQuaternionRotationDemo);
+        CreateButton(panel.transform, "DEFORM / FFD", new Vector2(168f, -199f), new Vector2(140f, 32f),
+            () => UnityEngine.SceneManagement.SceneManager.LoadScene(GlobalDeformationController.SceneName));
         statusText = CreateText(panel.transform, "", 12, Color.white, new Vector2(18f, -244f), new Vector2(420f, 34f));
         statusText.horizontalOverflow = HorizontalWrapMode.Wrap;
         statsText = CreateText(canvasObject.transform, "", 15, new Color(0.82f, 0.88f, 0.95f), new Vector2(18f, 18f), new Vector2(700f, 28f));

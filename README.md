@@ -83,3 +83,9 @@ Inspector 的 **Curve Type** 支持：
 演示视图显示 RGB 世界坐标轴和随物体旋转的局部坐标轴。若 OBJ 浏览器中已有加载模型，作业3会临时使用该 OBJ 作为旋转对象（包括用户选择的 OBJ）；返回曲线演示时会恢复模型原有父级和 Transform。没有可用 OBJ 时才使用默认方块。界面实时显示四元数分量 `(x, y, z, w)`、对应的 Euler XYZ 角，以及向量 `v = (1, 0, 0)` 经 `q·v` 旋转后的结果。
 
 主要逻辑位于 `QuaternionRotationDemoController`：它负责生成场景可视化、交互界面、轴角转换、四元数复合、Euler 角插值、四元数 Lerp 和 Slerp；演示对象退出时会恢复曲线模式原有相机设置。
+
+## 全局变形演示
+
+菜单 Tools > Global Deformation > Open Demo Scene，然后点击 Play。支持 OBJ 导入、锥化、扭曲、弯曲和 n×n×n 控制点 FFD（n=2–6），可实时拖点或输入坐标。
+
+完整教程见 Assets/Scripts/GlobalDeformation/使用说明.md。默认使用 StreamingAssets 内的细分示例模型，原有 OBJ 浏览器和曲线演示界面也增加了变形入口。

@@ -269,6 +269,13 @@ public sealed class ObjViewerController : MonoBehaviour
 
         CreateText("Title", panel.transform, "OBJ 模型浏览器", 22, Color.white, new Vector2(18f, -18f), new Vector2(394f, 34f), new Vector2(0f, 1f));
         CreateText("Hint", panel.transform, "右键旋转 · 中键平移 · 滚轮缩放", 13, new Color(0.65f, 0.72f, 0.82f), new Vector2(18f, -49f), new Vector2(394f, 24f), new Vector2(0f, 1f));
+        CreateButton("Deformation", canvasObject.transform, "全局变形 / FFD", new Vector2(18f, -200f), new Vector2(180f, 36f),
+            () =>
+            {
+                // This viewer survives scene loads, so hide its model and UI first.
+                gameObject.SetActive(false);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(GlobalDeformationController.SceneName);
+            });
 
         pathInput = CreateInputField(panel.transform, "路径（可填绝对路径或 Assets/...）", new Vector2(18f, -80f), new Vector2(394f, 34f));
         CreateButton("Choose", panel.transform, "选择文件", new Vector2(18f, -122f), new Vector2(94f, 32f), ChooseFile);

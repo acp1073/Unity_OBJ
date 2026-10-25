@@ -6,7 +6,8 @@ public static class ObjViewerBootstrap
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void CreateViewer()
     {
-        if (SceneManager.GetActiveScene().name == "ParametricCurveScene")
+        if (SceneManager.GetActiveScene().name == "ParametricCurveScene" ||
+            SceneManager.GetActiveScene().name == GlobalDeformationController.SceneName)
         {
             return;
         }
